@@ -1,3 +1,4 @@
+import std.conv;
 import std.file;
 import std.functional;
 import std.getopt;
@@ -122,7 +123,7 @@ int main(string[] args) {
     DerelictSDL2.load();
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) != 0) {
-        writeln("SDL Error (SDL_Init): ", SDL_GetError());
+        writeln("SDL Error (SDL_Init): ", to!string(SDL_GetError()));
         return 1;
     }
 
@@ -131,7 +132,7 @@ int main(string[] args) {
     SDL_Window* win = SDL_CreateWindow("nes", SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     if (win == null) {
-        writeln("SDL Error (SDL_CreateWindow): ", SDL_GetError());
+        writeln("SDL Error (SDL_CreateWindow): ", to!string(SDL_GetError()));
         return 1;
     }
 
@@ -140,7 +141,7 @@ int main(string[] args) {
     SDL_Renderer* ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED |
         SDL_RENDERER_PRESENTVSYNC);
     if (ren == null) {
-        writeln("SDL Error (SDL_CreateRenderer): ", SDL_GetError());
+        writeln("SDL Error (SDL_CreateRenderer): ", to!string(SDL_GetError()));
         return 1;
     }
 
@@ -151,7 +152,7 @@ int main(string[] args) {
         NATIVE_WIDTH * CurrentScaler.factor(),
         NATIVE_HEIGHT * CurrentScaler.factor());
     if (texture == null) {
-        writeln("SDL Error (SDL_CreateTexture): ", SDL_GetError());
+        writeln("SDL Error (SDL_CreateTexture): ", to!string(SDL_GetError()));
         return 1;
     }
 
@@ -167,7 +168,7 @@ int main(string[] args) {
 
     SDL_AudioDeviceID audioDev = SDL_OpenAudioDevice(null, 0, &want, &have, 0);
     if (audioDev == 0) {
-        writeln("SDL Error (SDL_OpenAudioDevice): ", SDL_GetError());
+        writeln("SDL Error (SDL_OpenAudioDevice): ", to!string(SDL_GetError()));
         return 1;
     }
 
@@ -183,7 +184,8 @@ int main(string[] args) {
         // Load joystick
         GameController = SDL_GameControllerOpen(0);
         if (GameController == null) {
-            writeln("Warning: Unable to open game controller! SDL Error (SDL_GameControllerOpen): ", SDL_GetError());
+            writeln("Warning: Unable to open game controller! SDL Error (SDL_GameControllerOpen): ",
+                to!string(SDL_GetError()));
         }
     }
 
@@ -330,7 +332,8 @@ int main(string[] args) {
                 if (e.cdevice.which == 0) {
                     GameController = SDL_GameControllerOpen(0);
                     if (GameController == null) {
-                        writeln("Warning: Unable to open game controller! SDL Error (SDL_GameControllerOpen): ", SDL_GetError());
+                        writeln("Warning: Unable to open game controller! SDL Error (SDL_GameControllerOpen): ",
+                            to!string(SDL_GetError()));
                     }
                 }
             }
