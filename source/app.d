@@ -176,6 +176,10 @@ int main(string[] args) {
 
     SDL_PauseAudioDevice(audioDev, 0);
 
+    if (SDL_GameControllerAddMappingsFromFile("gamecontrollerdb_205.txt") == -1)
+        writeln("Warning: Unable to open game controller mapping file! SDL Error (SDL_GameControllerAddMappingsFromFile): ",
+                to!string(SDL_GetError()));
+
     // Check for joysticks
     if (SDL_NumJoysticks() < 1) {
         writeln("Warning: No joysticks connected!");
