@@ -3,7 +3,7 @@
 
 ### Summary
 
-This is an example application for github.com/blahness/nes/.
+This is an example application for [github.com/blahness/nes](https://github.com/blahness/nes/).
 
 ### Dependencies
 
