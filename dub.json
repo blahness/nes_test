@@ -2,9 +2,10 @@
 	"name": "nes_test",
 	"description": "This is an example application for github.com/blahness/nes.",
 	"authors": ["Blahness"],
-    "license": "MIT License",
+	"license": "MIT License",
+	"targetType": "executable",
 	"dependencies": {
-        "nes": "~>0.1.0",
-        "derelict-sdl2": "~>3.0.0-alpha.4"
+		"nes": "~>0.1.0",
+		"derelict-sdl2": "~>3.0.0-alpha.4"
 	}
 }
