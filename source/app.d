@@ -39,7 +39,7 @@ Console MyConsole;
 
 SDL_GameController* GameController;
 
-string Cwd;
+string ExeDir;
 string StatePath;
 string SavePath;
 string RomFile, RomFileMinusExtension;
@@ -95,10 +95,10 @@ int main(string[] args) {
 
     RomFile = args[1];
 
-    Cwd = getcwd();
+    ExeDir = thisExePath().dirName();
 
-    StatePath = Cwd ~ "/state/";
-    SavePath = Cwd ~ "/save/";
+    StatePath = ExeDir ~ "/state/";
+    SavePath = ExeDir ~ "/save/";
 
     if (!exists(StatePath) || !isDir(StatePath))
         mkdir(StatePath);
@@ -176,7 +176,7 @@ int main(string[] args) {
 
     SDL_PauseAudioDevice(audioDev, 0);
 
-    if (SDL_GameControllerAddMappingsFromFile("gamecontrollerdb_205.txt") == -1)
+    if (SDL_GameControllerAddMappingsFromFile((ExeDir ~ "/gamecontrollerdb_205.txt").toStringz()) == -1)
         writeln("Warning: Unable to open game controller mapping file! SDL Error (SDL_GameControllerAddMappingsFromFile): ",
                 to!string(SDL_GetError()));
 
