@@ -16,6 +16,7 @@ enum WINDOW_WIDTH = 1280;
 enum WINDOW_HEIGHT = 720;
 
 enum NATIVE_WIDTH = 256;
+enum NORMAL_WIDTH = 320;
 enum NATIVE_HEIGHT = 240;
 
 enum SAMPLE_RATE = 44100;
@@ -28,9 +29,12 @@ enum WRAP_TICKS = 86400000; // Every 24 hours
 
 Scaler CurrentScaler;
 
-SDL_Rect CurrentRect;
-SDL_Rect PixelPerfectRect = SDL_Rect(256, 0, 760, 720);
-SDL_Rect FourThreeRect = SDL_Rect(160, 0, 960, 720);
+enum Display {
+    FourThree,
+    PixelPerfect
+}
+
+Display DisplayType;
 
 float[SAMPLE_BUFFER_LENGTH] SampleBuffer;
 uint SampleLength;
@@ -62,11 +66,11 @@ int main(string[] args) {
 
     switch (display) {
         case "4:3":
-            CurrentRect = FourThreeRect;
+            DisplayType = Display.FourThree;
             writeln("Using display mode 4:3.");
             break;
         case "pixel-perfect":
-            CurrentRect = PixelPerfectRect;
+            DisplayType = Display.PixelPerfect;
             writeln("Using display mode pixel-perfect.");
             break;
         default:
@@ -146,6 +150,10 @@ int main(string[] args) {
     }
 
     scope(exit) SDL_DestroyRenderer(ren);
+
+    //SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+    SDL_RenderSetLogicalSize(ren, DisplayType == Display.FourThree ?
+        NORMAL_WIDTH : NATIVE_WIDTH, NATIVE_HEIGHT);
 
     SDL_Texture* texture = SDL_CreateTexture(ren,
         SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING,
@@ -362,7 +370,7 @@ int main(string[] args) {
         if (quit) break;
 
         SDL_RenderClear(ren);
-        SDL_RenderCopy(ren, texture, null, &CurrentRect);
+        SDL_RenderCopy(ren, texture, null, null);
         SDL_RenderPresent(ren);
 
         if (SampleLength > 1) {
