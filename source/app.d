@@ -218,6 +218,14 @@ int main(string[] args) {
             if (e.type == SDL_QUIT) {
                 quit = true;
                 MyConsole.saveBatteryBackedRam(saveFileName);
+
+                bool isFullscreen = (SDL_GetWindowFlags(win) & SDL_WINDOW_FULLSCREEN) > 0;
+
+                if (isFullscreen) {
+                    SDL_SetWindowFullscreen(win, 0);
+                    SDL_ShowCursor(SDL_ENABLE);
+                }
+
                 break;
             }
             else if (e.type == SDL_KEYDOWN) {
