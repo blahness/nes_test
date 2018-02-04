@@ -1,6 +1,7 @@
 
 
 
+
 ### Summary
 
 This is an example application for [github.com/blahness/nes](https://github.com/blahness/nes/).
@@ -19,9 +20,26 @@ Installation
 
 For Windows there are stand-alone binary builds available at the [GitHub release page](https://github.com/blahness/nes_test/releases). Note: they were compiled with DMD so they're not very optimized.
 
+### Fetching with Dub
+
+```
+  dub fetch nes_test
+```
+
+To run:
+```
+  dub run nes_test --build=release -- <rom>
+```
+Or for a 64-bit version:
+```
+  dub run nes_test --arch=x86_64 --build=release -- <rom>
+```
+
+\<rom> should be the actual path of .nes rom to run
+
 ### Building from source
 
-Download this repo, cd to the folder that contains the source folder & run:
+Clone or download this repo, cd to the folder that contains the source folder & run:
 ```
   dub build --build=release
 ```
@@ -29,7 +47,10 @@ Or for a 64-bit version:
 ```
   dub build --arch=x86_64 --build=release
 ```
-If you're on Windows I'd also add --arch=x86_mscoff for the 32-bit version. The linker produces a very slow executable otherwise.
+
+### Notes
+
+If you're on Windows I'd also add --arch=x86_mscoff when using dub run or build to create 32-bit versions. The linker produces a very slow executable otherwise.
 
 The app expects the SDL2 runtime binaries (minimum version 2.0.5) to be available. You can find them here: [https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php).
 
