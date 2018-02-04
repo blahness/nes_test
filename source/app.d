@@ -31,7 +31,8 @@ Scaler CurrentScaler;
 
 enum Display {
     FourThree,
-    PixelPerfect
+    PixelPerfect,
+    Stretch
 }
 
 Display DisplayType;
@@ -54,7 +55,7 @@ int main(string[] args) {
 
     auto helpInformation = getopt(
         args,
-        "display|d", "Display mode [default: 4:3]. Can be pixel-perfect or 4:3.", &display,
+        "display|d", "Display mode [default: 4:3]. Can be pixel-perfect, 4:3 or stretch.", &display,
         "scaler|s", "Use scaler [default: none]. Can be none, scale2x or scale3x.", &scaler);
 
     if (helpInformation.helpWanted || args.length < 2) {
@@ -72,6 +73,10 @@ int main(string[] args) {
         case "pixel-perfect":
             DisplayType = Display.PixelPerfect;
             writeln("Using display mode pixel-perfect.");
+            break;
+        case "stretch":
+            DisplayType = Display.Stretch;
+            writeln("Using display mode stretch.");
             break;
         default:
             writeln("Error: Invalid display mode ", display);
@@ -152,8 +157,10 @@ int main(string[] args) {
     scope(exit) SDL_DestroyRenderer(ren);
 
     //SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-    SDL_RenderSetLogicalSize(ren, DisplayType == Display.FourThree ?
-        NORMAL_WIDTH : NATIVE_WIDTH, NATIVE_HEIGHT);
+
+    if (DisplayType != Display.Stretch)
+        SDL_RenderSetLogicalSize(ren, DisplayType == Display.FourThree ?
+            NORMAL_WIDTH : NATIVE_WIDTH, NATIVE_HEIGHT);
 
     SDL_Texture* texture = SDL_CreateTexture(ren,
         SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING,
