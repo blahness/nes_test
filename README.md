@@ -1,7 +1,4 @@
 
-
-
-
 ### Summary
 
 This is an example application for [github.com/blahness/nes](https://github.com/blahness/nes/).
@@ -18,7 +15,7 @@ Installation
 
 ### For a pre-built package
 
-For Windows there are stand-alone binary builds available at the [GitHub release page](https://github.com/blahness/nes_test/releases). Note: they were compiled with DMD so they're not very optimized.
+For Windows there are stand-alone binary builds available at the [GitHub release page](https://github.com/blahness/nes_test/releases). Note: the 32-bit (x86) version was compiled with DMD so it's not very optimized.
 
 ### Fetching with Dub
 

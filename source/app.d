@@ -37,7 +37,7 @@ enum Display {
 
 Display DisplayType;
 
-float[SAMPLE_BUFFER_LENGTH] SampleBuffer;
+short[SAMPLE_BUFFER_LENGTH] SampleBuffer;
 uint SampleLength;
 
 Console MyConsole;
@@ -176,7 +176,7 @@ int main(string[] args) {
     SDL_AudioSpec want, have;
 
     want.freq = SAMPLE_RATE;
-    want.format = AUDIO_F32;
+    want.format = AUDIO_S16;
     want.channels = 1;
     want.samples = SAMPLE_RATE / FPS;
     want.callback = null;
@@ -381,7 +381,7 @@ int main(string[] args) {
         SDL_RenderPresent(ren);
 
         if (SampleLength > 1) {
-            auto r = SDL_QueueAudio(audioDev, cast(void*)SampleBuffer.ptr, SampleLength * 4);
+            auto r = SDL_QueueAudio(audioDev, cast(void*)SampleBuffer.ptr, SampleLength * 2);
             if (r == 0) SampleLength = 0;
         }
 
@@ -409,7 +409,7 @@ int main(string[] args) {
     return 0;
 }
 
-void audioCallback(float sample) {
+void audioCallback(short sample) {
     if (SampleLength >= SAMPLE_BUFFER_LENGTH)
         return;
 

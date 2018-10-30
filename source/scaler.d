@@ -24,16 +24,6 @@ class NoScaler : Scaler {
     }
 }
 
-/*
-int max(int a, int b) {
-    return a > b ? a : b;
-}
-
-int min(int a, int b) {
-    return a < b ? a : b;
-}
-*/
-
 class Scale2x : Scaler {
     this() {
         this.buffer = new ubyte[NATIVE_WIDTH * 2 * NATIVE_HEIGHT * 2 * 4];
